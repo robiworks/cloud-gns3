@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+    config.vm.box = "ubuntu/xenial64"
+
+    # Konfiguracija za GNS3 server
+    #config.vm.define :server do |server|
+    #    server.vm.provider "virtualbox" do |v|
+    #        v.name = "gns3-server"
+    #        v.cpus = 2
+    #        v.memory = 2048
+    #    end
+    #    server.vm.hostname = "gns3-server"
+    #    server.vm.network "private_network", ip: "192.168.221.100"
+    #    server.vm.provision :shell, path: "gns3-server.sh"
+    #end
+
+    # Konfiguracija za GNS3 client
+    config.vm.define :client do |client|
+        client.vm.provider "virtualbox" do |v|
+            v.name = "gns3-client"
+            v.cpus = 1
+            v.memory = 1024
+            v.gui = true
+        end
+        client.vm.hostname = "gns3-client"
+        client.vm.network "private_network", ip: "192.168.221.101"
+        client.vm.provision :shell, path: "gns3-client.sh"
+    end
+end
