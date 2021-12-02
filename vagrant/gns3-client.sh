@@ -7,13 +7,13 @@ apt-get update
 apt-get upgrade -y
 
 # Install XFCE desktop https://stackoverflow.com/a/53363591
-apt-get install -y xfce4 virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
+apt-get install -y xfce4 firefox virtualbox-guest-dkms virtualbox-guest-utils virtualbox-guest-x11
 sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config
 apt-get install -y lightdm lightdm-gtk-greeter
 
 # Install GNS3 GUI
 export DEBIAN_FRONTEND=noninteractive
-apt-get install -y gns3
+apt-get install -y gns3-gui
 
 # Reboot after installing
 reboot
