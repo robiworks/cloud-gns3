@@ -18,7 +18,9 @@ autologin-user-timeout=0
 EOF
 
 # Install GNS3 GUI
-#export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
+add-apt-repository ppa:gns3/ppa -y
+apt-get install gns3 -y
 
 # Reboot after installing
 reboot
