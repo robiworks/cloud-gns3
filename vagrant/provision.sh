@@ -30,11 +30,11 @@ usermod -aG wireshark vagrant
 usermod -aG docker vagrant
 
 # Copy GDM3 autologin config
-cp /vagrant/gdm3.conf /etc/gdm3/custom.conf
+# cp /vagrant/gdm3.conf /etc/gdm3/custom.conf
 
 # Create GNS3 config folder if it does not exist and change owner, group to vagrant
 mkdir -p /home/vagrant/.config/GNS3/2.2
-chown -R vagrant:vagrant /home/vagrant/.config/GNS3/2.2
+chown -R vagrant:vagrant /home/vagrant/.config/GNS3
 # Copy over GNS3 config files
 cp /vagrant/gns3_gui.conf /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
 cp /vagrant/gns3_server.conf /home/vagrant/.config/GNS3/2.2/gns3_server.conf
