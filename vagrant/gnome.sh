@@ -30,5 +30,10 @@ usermod -aG kvm vagrant
 usermod -aG wireshark vagrant
 usermod -aG docker vagrant
 
+# Enable vagrant user autologin
+cp /vagrant/gdm3.conf /etc/gdm3/custom.conf
+
+# TODO: Copy GNS3 configuration files
+
 # Reboot due to GNOME desktop install
-reboot
+# reboot

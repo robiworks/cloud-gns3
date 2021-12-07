@@ -90,7 +90,7 @@ EOF
 ln -s /etc/guacamole /opt/tomcat/tomcatapp/.guacamole
 
 # Username for Guacamole: msi-gns3
-# Password for Guacamole: msi-gns3web
+# Password for Guacamole: msi-gns3
 cat > /etc/guacamole/user-mapping.xml << EOF
 <user-mapping>
 
@@ -101,15 +101,31 @@ cat > /etc/guacamole/user-mapping.xml << EOF
              login to Guacamole Web UI-->
     <authorize 
             username="msi-gns3"
-            password="2629ebbb0a1af1eed7c31cd6e3418252"
+            password="5692a48bde7b33d96fb6b5c9338db2f9"
             encoding="md5">
 
         <!-- Remote to GNS3 gnome setup -->
-        <connection name="Cloud GNS3">
+        <connection name="GNS3 1">
+            <protocol>vnc</protocol>
+            <param name="hostname">localhost</param>
+            <param name="port">5900</param>
+            <param name="username">vagrant</param>
+            <param name="password">msi-gns3</param>
+        </connection>
+
+        <connection name="GNS3 2">
             <protocol>vnc</protocol>
             <param name="hostname">localhost</param>
             <param name="port">5901</param>
-            <param name="username">msi-gns3</param>
+            <param name="username">vagrant</param>
+            <param name="password">msi-gns3</param>
+        </connection>
+
+        <connection name="GNS3 3">
+            <protocol>vnc</protocol>
+            <param name="hostname">localhost</param>
+            <param name="port">5902</param>
+            <param name="username">vagrant</param>
             <param name="password">msi-gns3</param>
         </connection>
 
