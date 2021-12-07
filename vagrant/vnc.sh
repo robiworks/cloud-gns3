@@ -24,6 +24,8 @@ EOF
 chown $myuser:$myuser /home/$myuser/.vnc/xstartup
 chmod 0600 /home/$myuser/.vnc/xstartup
 
+<<Ignore
+
 cat > /etc/systemd/system/vncserver@.service << EOF
 [Unit]
 Description=TigerVNC Server
@@ -44,5 +46,8 @@ EOF
 
 systemctl enable vncserver@1
 systemctl start vncserver@1
+Ignore
+
+echo "vncserver :1 -geometry 1900x1200 -depth 24" >> /home/vagrant/.profile
 
 reboot
