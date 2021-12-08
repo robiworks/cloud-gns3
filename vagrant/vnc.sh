@@ -3,51 +3,59 @@
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update
-apt-get -y install tigervnc-standalone-server
+apt-get install -y xserver-xorg-video-dummy x11vnc
+apt-get install -y lightdm
 
-myuser="vagrant"
-mypswd="msi-gns3"
+echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
+DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure lightdm
+echo set shared/default-x-display-manager lightdm | debconf-communicate
 
-mkdir /home/$myuser/.vnc
-echo $mypswd | vncpasswd -f > /home/$myuser/.vnc/passwd
-chown -R $myuser:$myuser /home/$myuser/.vnc
-chmod 0600 /home/$myuser/.vnc/passwd
+cat > /etc/X11/xorg.conf << EOF
+Section "Device"
+    Identifier  "Configured Video Device"
+    Driver      "dummy"
+    VideoRam    256000
+EndSection
 
-cat > /home/$myuser/.vnc/xstartup << EOF
-#!/bin/sh
-# Start Gnome 3 Desktop 
-[ -x /etc/vnc/xstartup ] && exec /etc/vnc/xstartup
-[ -r $HOME/.Xresources ] && xrdb $HOME/.Xresources
-vncconfig -iconic &
-dbus-launch --exit-with-session gnome-session &
+Section "Monitor"
+    Identifier  "Configured Monitor"
+    Modeline "1920x1080_60.00" 172.80 1920 2040 2248 2576 1080 1081 1084 1118 -HSync +Vsync
+EndSection
+
+Section "Screen"
+    Identifier  "Default Screen"
+    Monitor     "Configured Monitor"
+    Device      "Configured Video Device"
+    DefaultDepth 24
+    SubSection "Display"
+        Depth 24
+        Modes "1920x1080_60.00"
+    EndSubSection
+EndSection
 EOF
-chown $myuser:$myuser /home/$myuser/.vnc/xstartup
-chmod 0600 /home/$myuser/.vnc/xstartup
 
-<<Ignore
-
-cat > /etc/systemd/system/vncserver@.service << EOF
+x11vnc -storepasswd msi-gns3 /etc/x11vnc.pass
+cat > /etc/systemd/system/x11vnc.service << EOF
 [Unit]
-Description=TigerVNC Server
-After=syslog.target network.target
+Description="x11vnc"
+Requires=display-manager.service
+After=display-manager.service
 
 [Service]
-Type=forking
-User=vagrant
-
-# Clean any existing files in /tmp/.X11-unix environment
-ExecStartPre=/usr/bin/vncserver -kill :%i > /dev/null 2>&1 || :
-ExecStart=/usr/bin/vncserver -geometry 1600x900 -depth 24 -localhost no :%i
-ExecStop=/usr/bin/vncserver -kill :%i
+ExecStart=/usr/bin/x11vnc -geometry 1920x1080 -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth guess -rfbauth /etc/x11vnc.pass
+ExecStop=/usr/bin/killall x11vnc
+Restart=on-failure
+RestartSec=2
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
-systemctl enable vncserver@1
-systemctl start vncserver@1
-Ignore
+systemctl daemon-reload
+systemctl start x11vnc
+systemctl enable x11vnc
 
-echo "vncserver :1 -geometry 1900x1200 -depth 24" >> /home/vagrant/.profile
+# https://askubuntu.com/questions/1033274/ubuntu-18-04-connect-to-login-screen-over-vnc
+# Might be better to just enable GDM3 autologin and start the VNC server after autologin, don't use LightDM and tell the user that they should not log out.
 
 reboot
