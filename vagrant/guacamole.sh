@@ -103,7 +103,7 @@ cat > /etc/guacamole/user-mapping.xml << EOF
         <connection name="Cloud GNS3">
             <protocol>vnc</protocol>
             <param name="hostname">localhost</param>
-            <param name="port">5901</param>
+            <param name="port">5900</param>
             <param name="username">vagrant</param>
             <param name="password">msi-gns3</param>
         </connection>
