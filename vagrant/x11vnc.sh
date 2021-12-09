@@ -26,6 +26,7 @@ RestartSec=2
 WantedBy=multi-user.target
 EOF
 
+# Configure Xorg dummy display
 cat > /etc/X11/xorg.conf << EOF
 Section "Device"
     Identifier  "Configured Video Device"
@@ -35,6 +36,8 @@ EndSection
 
 Section "Monitor"
     Identifier  "Configured Monitor"
+    HorizSync 5.0 - 1000.0
+    VertRefresh 5.0 - 200.0
     Modeline "1920x1080_60.00" 172.80 1920 2040 2248 2576 1080 1081 1084 1118 -HSync +Vsync
 EndSection
 
