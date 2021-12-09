@@ -10,7 +10,7 @@ add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu
 # Install XFCE4
 apt-get update
 apt-get upgrade -y
-apt-get install -y xfce4 lightdm
+apt-get install -y xfce4 lightdm firefox
 
 # Change display manager to LightDM
 echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
