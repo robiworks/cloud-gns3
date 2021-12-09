@@ -13,6 +13,12 @@ apt-get upgrade -y
 
 # Install vanilla GNOME shell desktop
 apt-get install -y gnome-session gnome-terminal
+apt-get install -y nautilus --no-install-recommends
+
+# Disable lock screen, screen saver, idle lock
+gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+gsettings set org.gnome.desktop.screensaver lock-enabled false
+gsettings set org.gnome.desktop.session idle-delay 0
 
 # Install GNS3 Server and GUI | Wireshark hack: https://unix.stackexchange.com/q/367866
 echo "wireshark-common wireshark-common/install-setuid boolean true" | debconf-set-selections
