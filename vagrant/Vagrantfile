@@ -4,13 +4,11 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/focal64"
 
-    # Konfiguracija za GNS3 client
     config.vm.define :client do |client|
         client.vm.provider "virtualbox" do |v|
             v.name = "cloud-gns3"
             v.cpus = 2
             v.memory = 2048
-            # v.gui = true
         end
         client.vm.hostname = "cloud-gns3"
         client.vm.network "private_network", type: "dhcp"
