@@ -13,7 +13,7 @@ apt-get upgrade -y
 
 # Install vanilla GNOME shell desktop
 apt-get install -y gnome-session gnome-terminal
-apt-get install -y nautilus --no-install-recommends
+apt-get install -y nautilus firefox --no-install-recommends
 
 # Disable lock screen, screen saver, idle lock
 gsettings set org.gnome.desktop.lockdown disable-lock-screen true
