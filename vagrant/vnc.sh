@@ -11,7 +11,7 @@ mypswd="msi-gns3"
 mkdir /home/$myuser/.vnc
 echo $mypswd | vncpasswd -f > /home/$myuser/.vnc/passwd
 chown -R $myuser:$myuser /home/$myuser/.vnc
-chmod 0600 /home/$myuser/.vnc/passwd
+chmod 600 /home/$myuser/.vnc/passwd
 
 cat > /home/$myuser/.vnc/xstartup << EOF
 #!/bin/sh
@@ -22,32 +22,10 @@ vncconfig -iconic &
 dbus-launch --exit-with-session gnome-session &
 EOF
 chown $myuser:$myuser /home/$myuser/.vnc/xstartup
-chmod 0600 /home/$myuser/.vnc/xstartup
+chmod 600 /home/$myuser/.vnc/xstartup
 
-<<Ignore
-
-cat > /etc/systemd/system/vncserver@.service << EOF
-[Unit]
-Description=TigerVNC Server
-After=syslog.target network.target
-
-[Service]
-Type=forking
-User=vagrant
-
-# Clean any existing files in /tmp/.X11-unix environment
-ExecStartPre=/usr/bin/vncserver -kill :%i > /dev/null 2>&1 || :
-ExecStart=/usr/bin/vncserver -geometry 1600x900 -depth 24 -localhost no :%i
-ExecStop=/usr/bin/vncserver -kill :%i
-
-[Install]
-WantedBy=multi-user.target
+cat >> /home/vagrant/.profile << EOF
+vncserver :1 -geometry 1920x1080 -depth 24 -localhost
 EOF
-
-systemctl enable vncserver@1
-systemctl start vncserver@1
-Ignore
-
-echo "vncserver :1 -geometry 1900x1200 -depth 24" >> /home/vagrant/.profile
 
 reboot
