@@ -22,7 +22,7 @@ vncconfig -iconic &
 dbus-launch --exit-with-session gnome-session &
 EOF
 chown $myuser:$myuser /home/$myuser/.vnc/xstartup
-chmod 600 /home/$myuser/.vnc/xstartup
+chmod 755 /home/$myuser/.vnc/xstartup
 
 cat >> /home/vagrant/.profile << EOF
 vncserver :1 -geometry 1920x1080 -depth 24 -localhost

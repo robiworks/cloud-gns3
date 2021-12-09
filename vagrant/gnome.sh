@@ -39,7 +39,15 @@ usermod -aG docker vagrant
 # Enable vagrant user autologin
 cp /vagrant/gdm3.conf /etc/gdm3/custom.conf
 
-# TODO: Copy GNS3 configuration files
+# Copy GNS3 configuration files
+mkdir -p /home/vagrant/.config/GNS3/2.2
+chown vagrant:vagrant -R /home/vagrant/.config/GNS3
+cp /vagrant/gns3_gui.conf /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
+cp /vagrant/gns3_gui.conf /home/vagrant/.config/GNS3/2.2/gns3_server.conf
+chown vagrant:vagrant /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
+chown vagrant:vagrant /home/vagrant/.config/GNS3/2.2/gns3_server.conf
+chmod 664 /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
+chmod 664 /home/vagrant/.config/GNS3/2.2/gns3_server.conf
 
 # Reboot due to GNOME desktop install
 # reboot
