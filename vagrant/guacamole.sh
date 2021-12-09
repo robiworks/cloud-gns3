@@ -39,10 +39,10 @@ cd ~
 # Install Apache Tomcat https://computingforgeeks.com/install-and-use-guacamole-on-ubuntu/
 apt-get install -y openjdk-11-jdk
 useradd -m -U -d /opt/tomcat -s /bin/false tomcat
-wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.55/bin/apache-tomcat-9.0.55.tar.gz
+wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz
 mkdir /opt/tomcat
-tar -xzf apache-tomcat-9.0.55.tar.gz -C /opt/tomcat
-mv /opt/tomcat/apache-tomcat-9.0.55 /opt/tomcat/tomcatapp
+tar -xzf apache-tomcat-9.0.56.tar.gz -C /opt/tomcat
+mv /opt/tomcat/apache-tomcat-9.0.56 /opt/tomcat/tomcatapp
 chown -R tomcat: /opt/tomcat
 chmod +x /opt/tomcat/tomcatapp/bin/*.sh
 cat > /etc/systemd/system/tomcat.service << EOF
@@ -96,39 +96,17 @@ cat > /etc/guacamole/user-mapping.xml << EOF
 
     <!-- Per-user authentication and config information -->
 
-    <!-- A user using md5 to hash the password
-         guacadmin user and its md5 hashed password below is used to 
-             login to Guacamole Web UI-->
-    <authorize 
-            username="msi-gns3"
-            password="5692a48bde7b33d96fb6b5c9338db2f9"
-            encoding="md5">
+    <!-- A user using md5 to hash the password guacadmin user and its md5 hashed password below is used to login to Guacamole Web UI-->
 
-        <!-- Remote to GNS3 gnome setup -->
-        <connection name="GNS3 1">
-            <protocol>vnc</protocol>
-            <param name="hostname">localhost</param>
-            <param name="port">5900</param>
-            <param name="username">vagrant</param>
-            <param name="password">msi-gns3</param>
-        </connection>
-
-        <connection name="GNS3 2">
+    <authorize username="msi-gns3" password="5692a48bde7b33d96fb6b5c9338db2f9" encoding="md5">
+        <!-- VNC connection to Cloud GNS3 desktop -->
+        <connection name="Cloud GNS3">
             <protocol>vnc</protocol>
             <param name="hostname">localhost</param>
             <param name="port">5901</param>
             <param name="username">vagrant</param>
             <param name="password">msi-gns3</param>
         </connection>
-
-        <connection name="GNS3 3">
-            <protocol>vnc</protocol>
-            <param name="hostname">localhost</param>
-            <param name="port">5902</param>
-            <param name="username">vagrant</param>
-            <param name="password">msi-gns3</param>
-        </connection>
-
     </authorize>
 
 </user-mapping>
