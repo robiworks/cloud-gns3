@@ -2,24 +2,26 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+GUACAMOLE_SERVER_VERSION=1.3.0
+GUACAMOLE_SERVER_URL=https://apache.org/dyn/closer.lua/guacamole/1.3.0/source/guacamole-server-1.3.0.tar.gz?action=download
+GUACAMOLE_CLIENT_VERSION=1.3.0
+GUACAMOLE_CLIENT_URL=https://apache.org/dyn/closer.lua/guacamole/1.3.0/binary/guacamole-1.3.0.war?action=download
+TOMCAT_VERSION=9.0.56
+TOMCAT_URL=https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz
+
 # Update package index and install required dependencies
 apt-get update
 apt-get install -y libcairo2-dev libjpeg-turbo8-dev libpng-dev libtool-bin libossp-uuid-dev make
 
 # Install optional dependencies
-apt-get install -y libavcodec-dev libavformat-dev libavutil-dev libswscale-dev
-apt-get install -y freerdp2-dev
-apt-get install -y libpango1.0-dev
-apt-get install -y libssh2-1-dev
 apt-get install -y libvncserver-dev
 apt-get install -y libssl-dev
-apt-get install -y libvorbis-dev
 apt-get install -y libwebp-dev
 
 # Download guacamole-server source
-wget -O guacamole-server-1.3.0.tar.gz https://apache.org/dyn/closer.lua/guacamole/1.3.0/source/guacamole-server-1.3.0.tar.gz?action=download
-tar -xzf guacamole-server-1.3.0.tar.gz
-cd guacamole-server-1.3.0/
+wget -O guacamole-server-$GUACAMOLE_SERVER_VERSION.tar.gz $GUACAMOLE_SERVER_URL
+tar -xzf guacamole-server-$GUACAMOLE_SERVER_VERSION.tar.gz
+cd guacamole-server-$GUACAMOLE_SERVER_VERSION/
 
 # Run configure
 ./configure --with-init-dir=/etc/init.d
@@ -39,10 +41,10 @@ cd ~
 # Install Apache Tomcat https://computingforgeeks.com/install-and-use-guacamole-on-ubuntu/
 apt-get install -y openjdk-11-jdk
 useradd -m -U -d /opt/tomcat -s /bin/false tomcat
-wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz
+wget $TOMCAT_URL
 mkdir /opt/tomcat
-tar -xzf apache-tomcat-9.0.56.tar.gz -C /opt/tomcat
-mv /opt/tomcat/apache-tomcat-9.0.56 /opt/tomcat/tomcatapp
+tar -xzf apache-tomcat-$TOMCAT_VERSION.tar.gz -C /opt/tomcat
+mv /opt/tomcat/apache-tomcat-$TOMCAT_VERSION /opt/tomcat/tomcatapp
 chown -R tomcat: /opt/tomcat
 chmod +x /opt/tomcat/tomcatapp/bin/*.sh
 cat > /etc/systemd/system/tomcat.service << EOF
@@ -76,8 +78,8 @@ ufw allow 8080/tcp
 
 # Install guacamole-client
 mkdir /etc/guacamole
-wget -O ~/guacamole-1.3.0.war https://apache.org/dyn/closer.lua/guacamole/1.3.0/binary/guacamole-1.3.0.war?action=download
-mv ~/guacamole-1.3.0.war /etc/guacamole/guacamole.war
+wget -O ~/guacamole-$GUACAMOLE_CLIENT_VERSION.war $GUACAMOLE_CLIENT_URL
+mv ~/guacamole-$GUACAMOLE_CLIENT_VERSION.war /etc/guacamole/guacamole.war
 ln -s /etc/guacamole/guacamole.war /opt/tomcat/tomcatapp/webapps
 
 echo "GUACAMOLE_HOME=/etc/guacamole" | tee -a /etc/default/tomcat

@@ -2,9 +2,11 @@
 
 export DEBIAN_FRONTEND=noninteractive
 
+# Install X11VNC and Xorg dummy driver
 apt-get update
 apt-get install -y x11vnc xserver-xorg-video-dummy
 
+# Set up X11VNC password
 x11vnc -storepasswd msi-gns3 /etc/x11vnc.pass
 
 # Configure X11VNC https://askubuntu.com/a/1044081

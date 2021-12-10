@@ -18,7 +18,7 @@ DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure lightdm
 echo set shared/default-x-display-manager lightdm | debconf-communicate
 
 # Remove GDM3 completely
-# https://ubuntu-mate.community/t/how-to-switch-back-to-lightdm-from-gdm3/19015/2
+# https://askubuntu.com/a/1120828
 apt-get purge -y gdm3 ubuntu-session xwayland
 apt-get autoremove -y
 
@@ -43,16 +43,14 @@ apt-get install -y docker-ce
 usermod -aG ubridge vagrant
 usermod -aG libvirt vagrant
 usermod -aG kvm vagrant
-# dpkg-reconfigure wireshark-common
 usermod -aG wireshark vagrant
 usermod -aG docker vagrant
 
-# Copy GNS3 configuration files
+# Make GNS3 config directory if it doesn't exist
 mkdir -p /home/vagrant/.config/GNS3/2.2
 chown vagrant:vagrant -R /home/vagrant/.config/GNS3
-# cp /vagrant/gns3_gui.conf /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
-# cp /vagrant/gns3_gui.conf /home/vagrant/.config/GNS3/2.2/gns3_server.conf
 
+# Create GNS3 server config
 cat > /home/vagrant/.config/GNS3/2.2/gns3_server.conf << EOF
 [Server]
 path = /usr/bin/gns3server
@@ -78,6 +76,7 @@ udp_start_port_range = 10000
 udp_end_port_range = 20000
 EOF
 
+# Create GNS3 GUI config
 cat > /home/vagrant/.config/GNS3/2.2/gns3_gui.conf << EOF
 {
     "Builtin": {
@@ -173,6 +172,7 @@ cat > /home/vagrant/.config/GNS3/2.2/gns3_gui.conf << EOF
 }
 EOF
 
+# Change ownership and permissions of config files
 chown vagrant:vagrant /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
 chown vagrant:vagrant /home/vagrant/.config/GNS3/2.2/gns3_server.conf
 chmod 664 /home/vagrant/.config/GNS3/2.2/gns3_gui.conf
