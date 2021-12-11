@@ -118,6 +118,7 @@ runcmd:
 - systemctl daemon-reload
 - systemctl enable x11vnc.service
 - chown ubuntu:ubuntu -R /home/ubuntu
+- echo "ubuntu:ubuntu" | chpasswd
 
 power_state:
   mode: reboot
