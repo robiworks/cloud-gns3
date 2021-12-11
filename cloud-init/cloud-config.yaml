@@ -1,0 +1,18 @@
+#cloud-config
+
+package_update: true
+package_upgrade: true
+
+runcmd:
+- export DEBIAN_FRONTEND=noninteractive
+- add-apt-repository ppa:gns3/ppa -y
+- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+- add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+- apt-get update
+- apt-get upgrade -y
+- apt-get install -y xfce4 lightdm firefox
+- echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
+- DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure lightdm
+- echo set shared/default-x-display-manager lightdm | debconf-communicate
+- apt-get purge -y gdm3 ubuntu-session xwayland
+- apt-get autoremove -y
