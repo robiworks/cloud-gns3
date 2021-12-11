@@ -4,17 +4,17 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/focal64"
 
-    config.vm.define :client do |client|
-        client.vm.provider "virtualbox" do |v|
+    config.vm.define :gns3 do |gns3|
+        gns3.vm.provider "virtualbox" do |v|
             v.name = "cloud-gns3"
             v.cpus = 2
             v.memory = 2048
         end
-        client.vm.hostname = "cloud-gns3"
-        client.vm.network "private_network", type: "dhcp"
-        client.vm.network "forwarded_port", guest: 8080, host: 15000
-        client.vm.provision :shell, path: "xfce4.sh"
-        client.vm.provision :shell, path: "guacamole.sh"
-        client.vm.provision :shell, path: "x11vnc.sh"
+        gns3.vm.hostname = "cloud-gns3"
+        gns3.vm.network "private_network", type: "dhcp"
+        gns3.vm.network "forwarded_port", guest: 8080, host: 15000
+        gns3.vm.provision :shell, path: "xfce4.sh"
+        gns3.vm.provision :shell, path: "guacamole.sh"
+        gns3.vm.provision :shell, path: "x11vnc.sh"
     end
 end
