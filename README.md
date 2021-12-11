@@ -80,7 +80,7 @@ Log-in credentials for the actual VM:
 
 ## Usage
 
-After you've logged in to Apache Guacamole and the VM itself, you can start using it like a normal machine with Ubuntu. The VM comes preinstalled with the XFCE4 desktop environment, GNS3, Wireshark and Firefox.
+After you've logged into Apache Guacamole and the VM itself, you can start using it like a normal machine with Ubuntu. The VM comes preinstalled with the XFCE4 desktop environment, GNS3, Wireshark and Firefox.
 
 ![Find GNS3 in Applications -> Education -> GNS3](https://i.imgur.com/cVhcHjG.png)
 
@@ -101,7 +101,7 @@ Copy this basic topology using only preinstalled appliances or build your own to
 
 ![Wireshark ping capture](https://i.imgur.com/zxzhwii.png)
 
-Right click on the wire going from `Hub1` to `Switch1`, select `Start capture` and Wireshark will start up. Open `PC1`'s terminal and type in `ping 192.168.0.102`. This will send 6 ping packets from `PC1` to `PC3` and you will be able to see them in the Wireshark capture.
+Right click on the wire going from `Hub1` to `Switch1`, select `Start capture` and Wireshark will start up. Open `PC1`'s terminal and type in `ping 192.168.0.102`. This will send 6 ping packets (and 6 pong packets) between `PC1` and `PC3` and you will be able to see them in the Wireshark capture.
 
 ![Shut down the VM](https://i.imgur.com/5jreeSm.png)
 
