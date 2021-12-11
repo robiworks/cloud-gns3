@@ -80,4 +80,33 @@ Log-in credentials for the actual VM:
 
 ## Usage
 
-...
+After you've logged in to Apache Guacamole and the VM itself, you can start using it like a normal machine with Ubuntu. The VM comes preinstalled with the XFCE4 desktop environment, GNS3, Wireshark and Firefox.
+
+![Find GNS3 in Applications -> Education -> GNS3](https://i.imgur.com/cVhcHjG.png)
+
+You can find **GNS3** in `Applications -> Education -> GNS3`. You can also add it to the desktop for quicker access, just drag it to the desktop. **Wireshark** and **Firefox** are both located in `Applications -> Internet`.
+
+![Create your first GNS3 project](https://i.imgur.com/2pFIHal.png)
+
+GNS3 is **preconfigured** in the VM so you do not have to fiddle with the configuration files. Let's create an example project.
+
+![Basic GNS3 topology](https://i.imgur.com/RMkL7J7.png)
+
+Copy this basic topology using only preinstalled appliances or build your own topology, it's up to you. Click on the green *play* button, the devices will now be simulated. Let's configure the PCs. You can configure them through their terminal or by right-clicking and selecting `Edit config`. For the purposes of this tutorial we will configure them like this:
+
+* PC1: `ip 192.168.0.100/24`
+* PC2: `ip 192.168.0.101/24`
+* PC3: `ip 192.168.0.102/24`
+* PC4: `ip 192.168.0.103/24`
+
+![Wireshark ping capture](https://i.imgur.com/zxzhwii.png)
+
+Right click on the wire going from `Hub1` to `Switch1`, select `Start capture` and Wireshark will start up. Open `PC1`'s terminal and type in `ping 192.168.0.102`. This will send 6 ping packets from `PC1` to `PC3` and you will be able to see them in the Wireshark capture.
+
+![Shut down the VM](https://i.imgur.com/5jreeSm.png)
+
+After you've finished work with your GNS3, you can shut down the VM through the command line (`vagrant halt` or `multipass stop mp-gns3`), you can click on `Ubuntu` in the top right corner and select `Shutdown`, or use your cloud provider's shutdown feature.
+
+![After shutdown](https://i.imgur.com/7ANzt9q.png)
+
+The VM will shut down as expected and Apache Guacamole will notify you that you have been disconnected.
