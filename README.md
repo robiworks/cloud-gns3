@@ -115,7 +115,7 @@ Right click on the wire going from `Hub1` to `Switch1`, select `Start capture` a
 
 ![Shut down the VM](https://i.imgur.com/aiQRLox.png)
 
-After you've finished work with your GNS3, you can shut down the VM through the command line (`vagrant halt` or `multipass stop mp-gns3`), you can click on `Ubuntu` (or `vagrant` if you're using Vagrant) in the top right corner and select `Shutdown`, or use your cloud provider's shutdown feature.
+After you've finished work with your GNS3, you can shut down the VM through the command line (`vagrant halt` or `multipass stop mp-gns3`), you can click on `gns3user` (or `vagrant` if you're using Vagrant) in the top right corner and select `Shutdown`, or use your cloud provider's shutdown feature.
 
 ![After shutdown](https://i.imgur.com/RFBC8Z0.png)
 
