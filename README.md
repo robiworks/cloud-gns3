@@ -71,26 +71,36 @@ Log-in credentials for Apache Guacamole:
 * Password: `msi-gns3`
 
 Log-in credentials for the actual VM:
-* Username: `ubuntu` (choose on the login screen)
-* Password: `ubuntu`
+* Username: `gns3user` (choose on the login screen)
+* Password: `gns3user`
 
 #### Cloud providers
 
-...
+Use the `cloud-config.yaml` inside the `cloud-init` directory to provision your cloud VM. This will differ depending on the cloud provider that you use, refer to their documentation for instructions on how to provision your VM. In Azure, it is as simple as copy-pasting the `cloud-config.yaml` into a text box when creating your VM through the web interface.
+
+Make sure to **enable TCP traffic** to port **8080** on your VM or else the web interface will not work! When you have done that and the VM has finished provisioning, you will be able to access the Apache Guacamole web interface on `http://<your VM's IP address>:8080/guacamole/`.
+
+Log-in credentials for Apache Guacamole:
+* Username: `msi-gns3`
+* Password: `msi-gns3`
+
+Log-in credentials for the actual VM:
+* Username: `gns3user` (choose on the login screen)
+* Password: `gns3user`
 
 ## Usage
 
 After you've logged into Apache Guacamole and the VM itself, you can start using it like a normal machine with Ubuntu. The VM comes preinstalled with the XFCE4 desktop environment, GNS3, Wireshark and Firefox.
 
-![Find GNS3 in Applications -> Education -> GNS3](https://i.imgur.com/cVhcHjG.png)
+![Find GNS3 in Applications -> Education -> GNS3](https://i.imgur.com/9U92GFc.png)
 
 You can find **GNS3** in `Applications -> Education -> GNS3`. You can also add it to the desktop for quicker access, just drag it to the desktop. **Wireshark** and **Firefox** are both located in `Applications -> Internet`.
 
-![Create your first GNS3 project](https://i.imgur.com/2pFIHal.png)
+![Create your first GNS3 project](https://i.imgur.com/F5fwYEN.png)
 
 GNS3 is **preconfigured** in the VM so you do not have to fiddle with the configuration files. Let's create an example project.
 
-![Basic GNS3 topology](https://i.imgur.com/RMkL7J7.png)
+![Basic GNS3 topology](https://i.imgur.com/DEqMeJr.png)
 
 Copy this basic topology using only preinstalled appliances or build your own topology, it's up to you. Click on the green *play* button, the devices will now be simulated. Let's configure the PCs. You can configure them through their terminal or by right-clicking and selecting `Edit config`. For the purposes of this tutorial we will configure them like this:
 
@@ -99,14 +109,14 @@ Copy this basic topology using only preinstalled appliances or build your own to
 * PC3: `ip 192.168.0.102/24`
 * PC4: `ip 192.168.0.103/24`
 
-![Wireshark ping capture](https://i.imgur.com/zxzhwii.png)
+![Wireshark ping capture](https://i.imgur.com/JDKapMw.png)
 
 Right click on the wire going from `Hub1` to `Switch1`, select `Start capture` and Wireshark will start up. Open `PC1`'s terminal and type in `ping 192.168.0.102`. This will send 6 ping packets (and 6 pong packets) between `PC1` and `PC3` and you will be able to see them in the Wireshark capture.
 
-![Shut down the VM](https://i.imgur.com/5jreeSm.png)
+![Shut down the VM](https://i.imgur.com/aiQRLox.png)
 
 After you've finished work with your GNS3, you can shut down the VM through the command line (`vagrant halt` or `multipass stop mp-gns3`), you can click on `Ubuntu` (or `vagrant` if you're using Vagrant) in the top right corner and select `Shutdown`, or use your cloud provider's shutdown feature.
 
-![After shutdown](https://i.imgur.com/7ANzt9q.png)
+![After shutdown](https://i.imgur.com/RFBC8Z0.png)
 
 The VM will shut down as expected and Apache Guacamole will notify you that you have been disconnected.
