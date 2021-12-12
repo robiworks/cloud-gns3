@@ -11,9 +11,6 @@ apt:
     gns3.list:
       source: ppa:gns3/ppa
 
-# packages:
-# - something
-
 users:
   - default
 
@@ -68,13 +65,8 @@ write_files:
     permissions: '0644'
 
 runcmd:
-# xfce4.sh
+# XFCE4 install
 - export DEBIAN_FRONTEND=noninteractive
-- add-apt-repository ppa:gns3/ppa -y
-- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
-- add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-- apt-get update
-- apt-get upgrade -y
 - apt-get install -y xfce4 lightdm firefox
 - echo "/usr/sbin/lightdm" > /etc/X11/default-display-manager
 - DEBCONF_NONINTERACTIVE_SEEN=true dpkg-reconfigure lightdm
@@ -93,7 +85,7 @@ runcmd:
 - usermod -aG docker ubuntu
 - mkdir -p /home/ubuntu/.config/GNS3/2.2
 - chown ubuntu:ubuntu -R /home/ubuntu/.config/GNS3
-# guacamole.sh
+# Guacamole install
 - GUACAMOLE_SERVER_VERSION=1.3.0
 - GUACAMOLE_SERVER_URL=https://apache.org/dyn/closer.lua/guacamole/1.3.0/source/guacamole-server-1.3.0.tar.gz?action=download
 - GUACAMOLE_CLIENT_VERSION=1.3.0
@@ -134,7 +126,7 @@ runcmd:
 - ln -s /etc/guacamole /opt/tomcat/tomcatapp/.guacamole
 - systemctl restart tomcat guacd
 - ufw allow 4822/tcp
-# x11vnc.sh
+# X11VNC and Xorg dummy install
 - apt-get install -y x11vnc xserver-xorg-video-dummy
 - x11vnc -storepasswd msi-gns3 /etc/x11vnc.pass
 - systemctl daemon-reload
