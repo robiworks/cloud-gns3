@@ -120,3 +120,23 @@ After you've finished work with your GNS3, you can shut down the VM through the 
 ![After shutdown](https://i.imgur.com/RFBC8Z0.png)
 
 The VM will shut down as expected and Apache Guacamole will notify you that you have been disconnected.
+
+## Technical details
+
+The VM uses the following components for the desktop experience:
+* XFCE4 desktop environment
+* LightDM display manager
+* GNS3 GUI, GNS3 Server and all of its dependencies (Docker ...)
+* Firefox web browser
+
+Installing the XFCE4 package on Ubuntu 20.04 also installs GNOME (and GDM3) for some reason. The provisioning scripts set LightDM as the default display manager and purge GDM3, ubuntu-session, xwayland from the VM so the user can only boot into the XFCE4 desktop environment as GNOME caused some problems during testing and performed worse than XFCE4.
+
+After the *desktop experience* components are installed, the scripts create configuration files for GNS3 GUI and GNS3 Server so the user does not have to fiddle with the settings. The VM is ready for use.
+
+The remote desktop part of the VM uses:
+* Apache Guacamole for the web interface
+* X11VNC for the VNC server
+
+The provisioning scripts download the Guacamole server source code and compile it according to the instructions in the [Guacamole manual](https://guacamole.apache.org/doc/gug/installing-guacamole.html). Apache Tomcat is required to run the Guacamole web app and is installed according to the instructions [here](https://computingforgeeks.com/install-and-use-guacamole-on-ubuntu/).
+
+X11VNC is configured using the `xserver-xorg-video-dummy` dummy video driver. As the VM is expected to be run headlessly, this is required and a dummy monitor is configured with the resolution 1920x1080. X11VNC was chosen as the VNC server because of its ability to let the user also use the log-in screen of the VM instead of being logged in directly into a virtual desktop (as is the case with other VNC servers like TigerVNC).
