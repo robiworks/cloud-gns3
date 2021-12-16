@@ -51,7 +51,7 @@ Make sure you are currently in the directory containing the cloned GitHub reposi
 cd cloud-init
 ```
 
-Run the following command to start the VM with the name `mp-gns3`, 2 CPU cores, 2 GB of RAM and a 10 GB disk. You can modify the parameters according to your needs.
+Run the following command to start the VM with the name `mp-gns3`, 2 CPU cores, 2 GB of RAM and a 10 GB disk. You can modify the parameters according to your needs. Please note that the VM requires at least 6 GB of disk space, 10 GB is recommended.
 
 ```bash
 multipass launch --name mp-gns3 --cpus 2 --mem 2G --disk 10G --cloud-init cloud-config.yaml
